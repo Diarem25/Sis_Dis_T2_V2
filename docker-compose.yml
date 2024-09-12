@@ -1,0 +1,33 @@
+version: '3'  
+
+services:
+  controller:
+    build: ./controller-service  
+    container_name: controller   
+    depends_on:                  
+      - factory1
+      - factory2
+    networks:                    
+      - factory-network
+    stdin_open: true              
+    tty: true                     
+
+  factory1:
+    build: ./factory1-service     
+    container_name: factory1      
+    networks:                     
+      - factory-network
+    ports:
+      - "5001:5001"               
+
+  factory2:
+    build: ./factory2-service     
+    container_name: factory2      
+    networks:                     
+      - factory-network
+    ports:
+      - "5002:5002"               
+
+networks:
+  factory-network:                 
+    driver: bridge                 
